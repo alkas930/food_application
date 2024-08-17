@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                               hintText: "example@gmail.com",
                               hintStyle: TextStyle(
-                                  color: Color(0xffbec3d2), fontSize: 14),
+                                  color: Color(0xffbec3d2), fontSize: 12.5),
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.all(10)),
                           keyboardType: TextInputType.emailAddress,
@@ -116,7 +116,7 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                               hintText: "123456789",
                               hintStyle: TextStyle(
-                                  color: Color(0xffbec3d2), fontSize: 14),
+                                  color: Color(0xffbec3d2), fontSize: 12.5),
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.all(10),
                               suffixIcon: IconButton(
