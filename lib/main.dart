@@ -1,8 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:food_application/view/forgotPassword.dart';
 import 'package:food_application/view/login.dart';
 import 'package:food_application/view/signUp.dart';
+import 'package:food_application/view/verification.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

@@ -14,6 +14,7 @@ class _LoginState extends State<Login> {
     bool ischecked = false;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             // Background Image
