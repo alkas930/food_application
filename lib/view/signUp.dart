@@ -63,7 +63,7 @@ class _SignupState extends State<Signup> {
               ),
             ),
             // Upper Side Text
-            Positioned(
+            const Positioned(
               top: 90,
               left: 20,
               right: 20,

@@ -47,10 +47,10 @@ class _ForgotpasswordState extends State<Forgotpassword> {
               ),
             ),
 
-            Column(
+            const Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 90),
+                  padding: EdgeInsets.only(top: 90),
                   child: Center(
                     child: Text(
                       "Forgot Password",
@@ -78,7 +78,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
               child: Container(
                 height: size.height / 1.45,
                 width: size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xffffffff),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -92,7 +92,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "EMAIL",
                           style: TextStyle(
                             color: Colors.black54,
@@ -100,10 +100,10 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Container(
                           decoration: BoxDecoration(
-                            color: Color(0xfff0f5fa),
+                            color: const Color(0xfff0f5fa),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: TextFormField(
@@ -119,7 +119,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                               }
                               return null;
                             },
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: "example@gmail.com",
                               hintStyle: TextStyle(
                                 color: Color(0xffbec3d2),
@@ -130,7 +130,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
@@ -138,7 +138,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             height: 53,
                             child: ElevatedButton(
                               onPressed: _sendResetEmail,
-                              child: Text(
+                              child: const Text( 
                                 'RESET PASSWORD',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -147,7 +147,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xffff7622),
+                                backgroundColor: const Color(0xffff7622),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -155,7 +155,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                       ],
                     ),
                   ),
