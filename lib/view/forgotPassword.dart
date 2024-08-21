@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Forgotpassword extends StatefulWidget {
@@ -8,10 +9,30 @@ class Forgotpassword extends StatefulWidget {
 }
 
 class _ForgotpasswordState extends State<Forgotpassword> {
+  final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  Future<void> _sendResetEmail() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(
+          email: _emailController.text.trim(),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Password reset email sent!')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    bool ischecked = false;
+
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -41,12 +62,10 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                SizedBox(height: 5),
                 Center(
                   child: Text(
-                    "Please sign in to your existing account",
+                    "Please enter your email to receive a password reset link",
                     style: TextStyle(color: Color(0xfff4f4f5), fontSize: 12),
                   ),
                 ),
@@ -68,65 +87,77 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "EMAIL",
-                        style: TextStyle(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "EMAIL",
+                          style: TextStyle(
                             color: Colors.black54,
                             fontSize: 12,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          decoration: BoxDecoration(
                             color: Color(0xfff0f5fa),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: TextFormField(
-                          decoration: InputDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: TextFormField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              } else if (!RegExp(
+                                      r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+                                  .hasMatch(value)) {
+                                return 'Please enter a valid email address';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
                               hintText: "example@gmail.com",
                               hintStyle: TextStyle(
-                                  color: Color(0xffbec3d2), fontSize: 12.5),
+                                color: Color(0xffbec3d2),
+                                fontSize: 12.5,
+                              ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(10)),
-                          keyboardType: TextInputType.emailAddress,
+                              contentPadding: EdgeInsets.all(10),
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: size.width,
-                          height: 53,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              print('Button pressed!');
-                            },
-                            child: Text(
-                              'SEND CODE',
-                              style: TextStyle(
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: size.width,
+                            height: 53,
+                            child: ElevatedButton(
+                              onPressed: _sendResetEmail,
+                              child: Text(
+                                'RESET PASSWORD',
+                                style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xffff7622),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xffff7622),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                    ],
+                        SizedBox(height: 25),
+                      ],
+                    ),
                   ),
                 ),
               ),
