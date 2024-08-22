@@ -63,14 +63,39 @@ class _SignupState extends State<Signup> {
               ),
             ),
             // Upper Side Text
-            const Positioned(
-              top: 90,
+            Positioned(
+              top: 30,
               left: 20,
               right: 20,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: CircleAvatar(
+                        maxRadius: 17,
+                        backgroundColor: Colors.white,
+                        // child: Icon(
+                        //   Icons.arrow_back_ios_new,
+                        //   size: 14,
+                        //   color: Colors.grey,
+                        // ),
+
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
                     "Sign Up",
                     style: TextStyle(
                       color: Color(0xfff4f4f5),
@@ -78,8 +103,8 @@ class _SignupState extends State<Signup> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5),
-                  Text(
+                  const SizedBox(height: 5),
+                  const Text(
                     "Please sign up to get started",
                     style: TextStyle(color: Color(0xfff4f4f5), fontSize: 12),
                   ),

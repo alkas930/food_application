@@ -76,55 +76,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Container(
-                width: size.width,
-                height: 53,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (currentPage < images.length - 1) {
-                      _pageController.nextPage(
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeIn,
-                      );
-                    } else {
-                      // Navigate to HomeScreen
-                      Navigator.pushReplacementNamed(context, '/home');
-                    }
-                  },
-                  child: Text(
-                    currentPage < images.length - 1 ? "Next" : "Get started",
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xffff7622),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: TextButton(
-                onPressed: () {
-                  // Navigate to HomeScreen
-                  Navigator.pushReplacementNamed(context, '/home');
-                },
-                child: Text(
-                  "Skip",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue),
-                ),
-              ),
-            ),
+           Padding(
+             padding: const EdgeInsets.only(bottom: 200),
+             child: row(),
+           ),  Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: size.width,
+                            height: 53,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                print('Button pressed!');
+                              },
+                              child: Text( currentPage < images.length - 1 ? "Next" : "Get started",
+                               
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xffff7622),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Text("Skip",style: TextStyle(fontSize: 14,fontWeight:FontWeight.bold ),),
+                        )
           ],
         ),
       ),

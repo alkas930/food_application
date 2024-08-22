@@ -9,7 +9,7 @@ class SplashScreen2 extends StatefulWidget {
 }
 
 class _SplashScreen2State extends State<SplashScreen2> {
-   void initState() {
+  void initState() {
     super.initState();
     // Delay for 3 seconds
     Future.delayed(Duration(seconds: 3), () {
@@ -20,6 +20,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
       );
     });
   }
+
   @override
   Widget build(BuildContext context) {
     Size size =MediaQuery.of(context).size;
@@ -27,7 +28,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
   children: [
     Positioned.fill(
       child: Image.asset(
-       "assets/background-removebg-preview.png",
+       "assets/background.jpg",
         fit: BoxFit.cover,
       ),
     ),

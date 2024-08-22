@@ -47,10 +47,35 @@ class _ForgotpasswordState extends State<Forgotpassword> {
               ),
             ),
 
-            const Column(
+            Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 90),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, left: 20),
+                      child: CircleAvatar(
+                        maxRadius: 17,
+                        backgroundColor: Colors.white,
+                        // child: Icon(
+                        //   Icons.arrow_back_ios_new,
+                        //   size: 14,
+                        //   color: Colors.grey,
+                        // ),
+
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    )),
+                const Padding(
+                  padding: EdgeInsets.only(top: 30),
                   child: Center(
                     child: Text(
                       "Forgot Password",
@@ -62,14 +87,14 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
-                Center(
+                const SizedBox(height: 5),
+                const Center(
                   child: Text(
-                    "Please enter your email to receive a password reset link",
+                    "Please enter email to receive a password reset link",
                     style: TextStyle(color: Color(0xfff4f4f5), fontSize: 12),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
 
@@ -138,7 +163,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             height: 53,
                             child: ElevatedButton(
                               onPressed: _sendResetEmail,
-                              child: const Text( 
+                              child: const Text(
                                 'RESET PASSWORD',
                                 style: TextStyle(
                                   color: Colors.white,
