@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,6 +15,32 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   bool _isObscurePassword = true;
   bool _isChecked = false;
+  late Box box1;
+  @override
+  void initState() {
+    super.initState();
+    // Initialize Hive and open a box
+    createBox();
+    getdata();
+  }
+
+  void createBox() async {
+    box1 = await Hive.openBox('logindata');
+  }
+
+  void getdata() async {
+    if (await box1.get("_emailController") != null) {
+      _emailController.text = box1.get("_emailController");
+      _isChecked = true;
+      setState(() {});
+    }
+    if (box1.get("_passwordController") != null) {
+      _emailController.text = box1.get("_passwordController");
+
+      _isChecked = true;
+      setState(() {});
+    }
+  }
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -28,6 +55,11 @@ class _LoginState extends State<Login> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
+        if (_isChecked) {
+          box1.put('email', _emailController.text);
+          box1.put('password', _passwordController.text);
+          print("data store");
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login Successful!')),
         );
@@ -185,14 +217,21 @@ class _LoginState extends State<Login> {
                         const SizedBox(height: 10),
                         Row(
                           children: [
+                            // Checkbox(
+                            //   value: _isChecked,
+                            //   onChanged: (bool? value) {
+                            //     setState(() {
+                            //       _isChecked = value ?? false;
+                            //     });
+                            //   },
+                            // ),
+
                             Checkbox(
-                              value: _isChecked,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  _isChecked = value ?? false;
-                                });
-                              },
-                            ),
+                                value: _isChecked,
+                                onChanged: (value) {
+                                  _isChecked = !_isChecked;
+                                  setState(() {});
+                                }),
                             const Text(
                               'Remember me',
                               style: TextStyle(fontSize: 12),

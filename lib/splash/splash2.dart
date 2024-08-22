@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_application/onboarding%20.dart';
+import 'package:food_application/view/homeScreen.dart';
+import 'package:hive/hive.dart';
+// Replace with your actual home screen
 
 class SplashScreen2 extends StatefulWidget {
   const SplashScreen2({super.key});
@@ -9,40 +12,64 @@ class SplashScreen2 extends StatefulWidget {
 }
 
 class _SplashScreen2State extends State<SplashScreen2> {
+  @override
   void initState() {
     super.initState();
-    // Delay for 3 seconds
-    Future.delayed(Duration(seconds: 3), () {
-      // Navigate to the main screen after the delay
+    // Initialize Hive and check for stored data
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    // Open the Hive box
+    final box = await Hive.openBox('logindata');
+
+    // Check if the email and password are stored
+    final email = box.get('email');
+    final password = box.get('password');
+
+    // Delay for 3 seconds to show splash screen
+    await Future.delayed(Duration(seconds: 3));
+
+    // Navigate based on the availability of stored data
+    if (email != null && password != null) {
+      Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
+        context,
+        MaterialPageRoute(
+            builder: (context) => Homescreen()), // Navigate to the home screen
+      );
+    } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+        MaterialPageRoute(
+            builder: (context) =>
+                const OnboardingScreen()), // Navigate to the login page
       );
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-          child: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              "assets/background-removebg-preview.png",
-              fit: BoxFit.cover,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                "assets/background-removebg-preview.png",
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Center(
-            child: Center(
-                child: Image.asset(
-              "assets/ImportedPhoto_1723789002897-removebg-preview.png",
-              scale: 1,
-            )),
-          ),
-        ],
-      )),
+            Center(
+              child: Image.asset(
+                "assets/ImportedPhoto_1723789002897-removebg-preview.png",
+                scale: 1,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

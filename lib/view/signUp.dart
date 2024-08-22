@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -13,8 +14,17 @@ class _SignupState extends State<Signup> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _retypePasswordController = TextEditingController();
+  final _nameController = TextEditingController();
+
   bool _isObscurePassword = true;
   bool _isObscureReTypePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize Hive and open a box
+    Hive.openBox('userCredentials');
+  }
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -35,6 +45,11 @@ class _SignupState extends State<Signup> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
+
+        // Store credentials in Hive
+        final box = Hive.box('userCredentials');
+        box.put('email', _emailController.text.trim());
+        box.put('password', _passwordController.text.trim());
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Sign Up Successful!')),
         );
@@ -149,6 +164,7 @@ class _SignupState extends State<Signup> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: TextFormField(
+                            controller: _nameController,
                             decoration: const InputDecoration(
                               hintText: "John doe",
                               hintStyle: TextStyle(

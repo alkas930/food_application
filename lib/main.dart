@@ -7,10 +7,13 @@ import 'package:food_application/view/forgotPassword.dart';
 import 'package:food_application/view/homeScreen.dart';
 import 'package:food_application/view/logIn.dart';
 import 'package:food_application/view/signUp.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:hive/hive.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await Hive.initFlutter(); // Initialize Hive
   runApp(const MyApp());
 }
 
