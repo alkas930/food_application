@@ -30,7 +30,7 @@ class _VerificationState extends State<Verification> {
             const Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 90),
+                  padding: EdgeInsets.only(top: 30),
                   child: Center(
                     child: Text(
                       "Verification",

@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:food_application/onboarding%20.dart';
 import 'package:food_application/splash/splash1.dart';
 import 'package:food_application/splash/splash2.dart';
+import 'package:food_application/view/forgotPassword.dart';
+import 'package:food_application/view/homeScreen.dart';
+import 'package:food_application/view/logIn.dart';
+import 'package:food_application/view/signUp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +20,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        routes: {
+          '/home': (context) => Homescreen(),
+          '/login': (context) => Login(),
+          '/signup': (context) => Signup(),
+          '/forgot': (context) => Forgotpassword(),
+        },
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(

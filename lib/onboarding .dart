@@ -10,20 +10,23 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<String> images = [
     "assets/order1-removebg-preview.png",
-    
     "assets/order3-removebg-preview.png",
     "assets/order-removebg-preview.png"
   ];
-  List text=[
+
+  final List<String> text = [
     'All your favorites',
-    "Order from choosen chef","Free delivery offers",
+    "Order from chosen chef",
+    "Free delivery offers",
   ];
- 
+
   int currentPage = 0;
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    Size size=MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -31,30 +34,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           children: [
             Expanded(
               child: PageView.builder(
+                controller: _pageController,
                 itemCount: images.length,
                 itemBuilder: (context, index) {
                   return SafeArea(
                     child: Column(
-                     
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Image.asset(
+                          images[index],
+                          scale: 0.9, // Adjust the fit to cover the screen
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 25),
-                          child: Image.asset(
-                            images[index],
-                             scale: 0.9,// Adjust the fit to cover the screen
-                          ),
-                        ),Padding(
                           padding: const EdgeInsets.only(top: 20),
-                          child: Text(text[index],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
+                          child: Text(
+                            text[index],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Get all your loved foods in one once place,\nyou just place the order, we do the rest",
+                            "Get all your loved foods in one place,\nyou just place the order, we do the rest",
                             textAlign: TextAlign.center,
                           ),
                         ),
-                      
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20), // Add space between text and indicators
+                          child: row(),
+                        ),
                       ],
                     ),
                   );
@@ -66,37 +76,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
               ),
             ),
-           Padding(
-             padding: const EdgeInsets.only(bottom: 200),
-             child: row(),
-           ),  Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: size.width,
-                            height: 53,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                print('Button pressed!');
-                              },
-                              child: Text( currentPage < images.length - 1 ? "Next" : "Get started",
-                               
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xffff7622),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Text("Skip",style: TextStyle(fontSize: 14,fontWeight:FontWeight.bold ),),
-                        )
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Container(
+                width: size.width,
+                height: 53,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (currentPage < images.length - 1) {
+                      _pageController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                    } else {
+                      // Navigate to loginScreen
+                      Navigator.pushReplacementNamed(context, '/login');
+                    }
+                  },
+                  child: Text(
+                    currentPage < images.length - 1 ? "Next" : "Get started",
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffff7622),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: TextButton(
+                onPressed: () {
+                  // Navigate to HomeScreen
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                child: Text(
+                  "Skip",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue),
+                ),
+              ),
+            ),
           ],
         ),
       ),
