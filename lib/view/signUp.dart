@@ -18,12 +18,36 @@ class _SignupState extends State<Signup> {
 
   bool _isObscurePassword = true;
   bool _isObscureReTypePassword = true;
-
+  late Box box2;
   @override
   void initState() {
     super.initState();
-    // Initialize Hive and open a box
-    Hive.openBox('userCredentials');
+
+    createBox();
+    getdata();
+  }
+
+  void createBox() async {
+    box2 = await Hive.openBox('logindata');
+  }
+
+  void getdata() async {
+    if (await box2.get("_emailController") != null) {
+      _emailController.text = box2.get("_emailController");
+
+      setState(() {});
+    }
+    if (box2.get("_passwordController") != null) {
+      _emailController.text = box2.get("_passwordController");
+
+      setState(() {});
+    }
+
+    if (box2.get("_nameController") != null) {
+      _emailController.text = box2.get("_passwordController");
+
+      setState(() {});
+    }
   }
 
   void _togglePasswordVisibility() {
@@ -46,10 +70,21 @@ class _SignupState extends State<Signup> {
           password: _passwordController.text.trim(),
         );
 
+        // Navigator.popAndPushNamed(context, "/home");
+
+        Navigator.pushReplacementNamed(
+          context,
+          "/home",
+          arguments: {
+            'name': _nameController.text, // Pass the name to the home screen
+          },
+        );
+
         // Store credentials in Hive
-        final box = Hive.box('userCredentials');
-        box.put('email', _emailController.text.trim());
-        box.put('password', _passwordController.text.trim());
+        box2.put('email', _emailController.text);
+        box2.put('password', _passwordController.text);
+        box2.put('name', _nameController.text);
+        print("data store");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Sign Up Successful!')),
         );
