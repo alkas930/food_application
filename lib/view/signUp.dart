@@ -62,6 +62,48 @@ class _SignupState extends State<Signup> {
     });
   }
 
+  // Future<void> _signup() async {
+  //   if (_formKey.currentState?.validate() ?? false) {
+  //     try {
+  //       await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //         email: _emailController.text.trim(),
+  //         password: _passwordController.text.trim(),
+  //       );
+
+  //       // Navigator.popAndPushNamed(context, "/home");
+
+  //       Navigator.pushReplacementNamed(
+  //         context,
+  //         "/home",
+  //         arguments: {
+  //           'name': _nameController.text, // Pass the name to the home screen
+  //         },
+  //       );
+
+  //       // Store credentials in Hive
+  //       box2.put('email', _emailController.text);
+  //       box2.put('password', _passwordController.text);
+  //       box2.put('name', _nameController.text);
+  //       print("data store");
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text('Sign Up Successful!')),
+  //       );
+
+  //       Navigator.pushReplacementNamed(
+  //         context,
+  //         '/login',
+  //         arguments: {
+  //           'name': _nameController.text,
+  //         },
+  //       );
+  //     } catch (e) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Error: ${e.toString()}')),
+  //       );
+  //     }
+  //   }
+  // }
+
   Future<void> _signup() async {
     if (_formKey.currentState?.validate() ?? false) {
       try {
@@ -70,21 +112,20 @@ class _SignupState extends State<Signup> {
           password: _passwordController.text.trim(),
         );
 
-        // Navigator.popAndPushNamed(context, "/home");
+        // Store credentials in Hive
+        await box2.put('email', _emailController.text);
+        await box2.put('password', _passwordController.text);
+        await box2.put('name', _nameController.text); // Save the user name
 
+        // Navigate to home and pass the user name
         Navigator.pushReplacementNamed(
           context,
           "/home",
           arguments: {
-            'name': _nameController.text, // Pass the name to the home screen
+            'name': _nameController.text,
           },
         );
 
-        // Store credentials in Hive
-        box2.put('email', _emailController.text);
-        box2.put('password', _passwordController.text);
-        box2.put('name', _nameController.text);
-        print("data store");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Sign Up Successful!')),
         );

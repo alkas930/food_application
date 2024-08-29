@@ -16,6 +16,7 @@ class _LoginState extends State<Login> {
   bool _isObscurePassword = true;
   bool _isChecked = false;
   late Box box1;
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +36,13 @@ class _LoginState extends State<Login> {
       setState(() {});
     }
     if (box1.get("_passwordController") != null) {
-      _emailController.text = box1.get("_passwordController");
+      _passwordController.text = box1.get("_passwordController");
+
+      _isChecked = true;
+      setState(() {});
+    }
+    if (box1.get("_nameController") != null) {
+      _passwordController.text = box1.get("_nameController");
 
       _isChecked = true;
       setState(() {});
@@ -48,6 +55,30 @@ class _LoginState extends State<Login> {
     });
   }
 
+  // Future<void> _login() async {
+  //   if (_formKey.currentState?.validate() ?? false) {
+  //     try {
+  //       await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //         email: _emailController.text.trim(),
+  //         password: _passwordController.text.trim(),
+  //       );
+  //       if (_isChecked) {
+  //         box1.put('email', _emailController.text);
+  //         box1.put('password', _passwordController.text);
+  //         print("data store");
+  //       }
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text('Login Successful!')),
+  //       );
+  //       Navigator.popAndPushNamed(context, "/home");
+  //     } catch (e) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Error: ${e.toString()}')),
+  //       );
+  //     }
+  //   }
+  // }
+
   Future<void> _login() async {
     if (_formKey.currentState?.validate() ?? false) {
       try {
@@ -55,15 +86,22 @@ class _LoginState extends State<Login> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        if (_isChecked) {
-          box1.put('email', _emailController.text);
-          box1.put('password', _passwordController.text);
-          print("data store");
-        }
+
+        // Fetch the user’s name from Hive
+        String? userName = await box1.get('name'); // Retrieve stored name
+
+        Navigator.pushReplacementNamed(
+          context,
+          "/home",
+          arguments: {
+            'name':
+                userName ?? 'Guest', // Use stored name or default to 'Guest'
+          },
+        );
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login Successful!')),
         );
-        Navigator.popAndPushNamed(context, "/home");
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: ${e.toString()}')),
@@ -75,6 +113,10 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    // Retrieve the passed arguments
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map?;
+    final name = arguments?['name'] as String?;
 
     return SafeArea(
       child: Scaffold(
@@ -109,6 +151,13 @@ class _LoginState extends State<Login> {
                     "Please sign in to your existing account",
                     style: TextStyle(color: Color(0xfff4f4f5), fontSize: 12),
                   ),
+                  if (name != null) ...[
+                    SizedBox(height: 10),
+                    Text(
+                      "Welcome, $name",
+                      style: TextStyle(color: Colors.green, fontSize: 16),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -218,15 +267,6 @@ class _LoginState extends State<Login> {
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            // Checkbox(
-                            //   value: _isChecked,
-                            //   onChanged: (bool? value) {
-                            //     setState(() {
-                            //       _isChecked = value ?? false;
-                            //     });
-                            //   },
-                            // ),
-
                             Checkbox(
                                 value: _isChecked,
                                 onChanged: (value) {
@@ -292,54 +332,15 @@ class _LoginState extends State<Login> {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/signup');
+                                Navigator.pushNamed(context, '/signup');
                               },
-                              child: Text(
-                                '  SIGN UP',
+                              child: const Text(
+                                'Sign Up',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
                                   color: Color(0xffffaa77),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        const Center(child: Text("Or")),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 93, 4, 209),
-                              radius: 30,
-                              child: const Icon(
-                                Icons.phone,
-                                color: Colors.white,
-                                size: 26,
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            CircleAvatar(
-                              backgroundColor: Colors.blueAccent,
-                              radius: 30,
-                              child: const Icon(
-                                Icons.facebook,
-                                color: Colors.white,
-                                size: 26,
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            CircleAvatar(
-                              backgroundColor: Colors.black,
-                              radius: 30,
-                              child: const Icon(
-                                Icons.email,
-                                color: Colors.white,
-                                size: 26,
                               ),
                             ),
                           ],

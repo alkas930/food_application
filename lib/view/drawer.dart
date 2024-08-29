@@ -17,11 +17,22 @@ class _MyDrawerState extends State<MyDrawer> {
     _userNameFuture = _fetchUserName();
   }
 
+  // Future<String> _fetchUserName() async {
+  //   try {
+  //     var box = await Hive.openBox('logindata');
+  //     String? userName = box.get('name');
+  //     return userName ?? 'Guest';
+  //   } catch (e) {
+  //     print('Error fetching user name: $e');
+  //     return 'Guest'; // Default value in case of error
+  //   }
+  // }
+
   Future<String> _fetchUserName() async {
     try {
       var box = await Hive.openBox('logindata');
       String? userName = box.get('name');
-      return userName ?? 'Guest';
+      return userName ?? 'Guest'; // Default value in case of error
     } catch (e) {
       print('Error fetching user name: $e');
       return 'Guest'; // Default value in case of error
