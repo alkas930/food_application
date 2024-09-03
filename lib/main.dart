@@ -24,10 +24,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
-          '/home': (context) => Homescreen(),
-          '/login': (context) => Login(),
-          '/signup': (context) => Signup(),
-          '/forgot': (context) => Forgotpassword(),
+          '/home': (context) => const Homescreen(),
+          '/login': (context) => const Login(),
+          '/signup': (context) => const Signup(),
+          '/forgot': (context) => const Forgotpassword(),
         },
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SplashScreen());
+        home: const SplashScreen());
   }
 }
 
@@ -51,6 +51,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

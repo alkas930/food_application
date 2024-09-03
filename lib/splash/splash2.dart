@@ -52,10 +52,13 @@ class _SplashScreen2State extends State<SplashScreen2> {
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: const Color(0xffffffff),
       body: SafeArea(
         child: Stack(
           children: [
             Positioned.fill(
+              bottom: 5,
+              left: 5,
               child: Image.asset(
                 "assets/background-removebg-preview.png",
                 fit: BoxFit.cover,

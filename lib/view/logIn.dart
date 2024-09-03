@@ -87,6 +87,13 @@ class _LoginState extends State<Login> {
           password: _passwordController.text.trim(),
         );
 
+        if (_isChecked) {
+          box1.put('email', _emailController.text);
+          box1.put('password', _passwordController.text);
+
+          print("data store");
+        }
+
         // Fetch the user’s name from Hive
         String? userName = await box1.get('name'); // Retrieve stored name
 
@@ -138,7 +145,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Log In",
                     style: TextStyle(
                       color: Color(0xfff4f4f5),
@@ -146,16 +153,16 @@ class _LoginState extends State<Login> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5),
-                  Text(
+                  const SizedBox(height: 5),
+                  const Text(
                     "Please sign in to your existing account",
                     style: TextStyle(color: Color(0xfff4f4f5), fontSize: 12),
                   ),
                   if (name != null) ...[
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       "Welcome, $name",
-                      style: TextStyle(color: Colors.green, fontSize: 16),
+                      style: const TextStyle(color: Colors.green, fontSize: 16),
                     ),
                   ],
                 ],
@@ -181,7 +188,7 @@ class _LoginState extends State<Login> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         const Text(
                           "EMAIL",
                           style: TextStyle(
@@ -283,7 +290,7 @@ class _LoginState extends State<Login> {
                                 Navigator.pushReplacementNamed(
                                     context, '/forgot');
                               },
-                              child: Text(
+                              child: const Text(
                                 'Forgot Password',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,

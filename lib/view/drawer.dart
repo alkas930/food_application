@@ -117,6 +117,7 @@ class _MyDrawerState extends State<MyDrawer> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
+              elevation: 1,
               child: Container(
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
