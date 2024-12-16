@@ -198,12 +198,18 @@ class _LoginState extends State<Login> {
                               style: TextStyle(fontSize: 12),
                             ),
                             const Spacer(),
-                            Text(
-                              'Forgot Password',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                                color: Color(0xffffaa77),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/forgot');
+                              },
+                              child: Text(
+                                'Forgot Password',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: Color(0xffffaa77),
+                                ),
                               ),
                             ),
                           ],
@@ -244,12 +250,18 @@ class _LoginState extends State<Login> {
                                 fontSize: 12,
                               ),
                             ),
-                            Text(
-                              '  SIGN UP',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                                color: Color(0xffffaa77),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/signup');
+                              },
+                              child: Text(
+                                '  SIGN UP',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: Color(0xffffaa77),
+                                ),
                               ),
                             ),
                           ],
